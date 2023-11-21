@@ -1,4 +1,7 @@
 
+using Microsoft.EntityFrameworkCore;
+using Product_Reviews_Api.Data;
+
 namespace Product_Reviews_Api
 {
     public class Program
@@ -7,12 +10,19 @@ namespace Product_Reviews_Api
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            // Add services to the container.
+            // Add services to the container.           
 
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
+
+            var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ??
+                throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
+
+            builder.Services.AddDbContext<ApplicationDbContext>(options =>
+                    options.UseMySQL(connectionString, b => b.MigrationsAssembly(typeof
+                        (ApplicationDbContext).Assembly.FullName)));
 
             var app = builder.Build();
 
