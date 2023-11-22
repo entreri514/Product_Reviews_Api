@@ -18,10 +18,15 @@ namespace Product_Reviews_Api.Controllers
             }
           //GET: api/<ProductsController>
         [HttpGet]
-        public IActionResult ProductGet()
+        public IActionResult ProductGet([FromQuery] string? maxPrice)
         {
-            var getProduct = _context.Products.ToList();
-            return StatusCode(200, getProduct);
+            if (maxPrice == null)
+            {
+                var getProduct = _context.Products.ToList();
+                return StatusCode(200, getProduct);
+            }
+            var getProductb = _context.Products.Where(p => p.Price < 20);
+            return StatusCode(200, getProductb);
         }
 
         // GET api/<ProductsController>/5
