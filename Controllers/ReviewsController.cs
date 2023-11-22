@@ -75,11 +75,11 @@ namespace Product_Reviews_Api.Controllers
             _context.SaveChanges();
             return NoContent();
         }
-        [HttpGet("id")]
-        public IActionResult ReviewGetByProductId(int id)
+        [Route("api/productId")]
+        public IActionResult ReviewGetByProductId(ICollection <Review> Reviews, int productId)
         {
-            var getByProdId = _context.Reviews.Find(id);
-
+            var getByProdId = _context.Reviews.Where(r => r.ProductId==productId);
+            return NotFound();
         }
     }
 }
