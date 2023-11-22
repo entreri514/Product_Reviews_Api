@@ -75,11 +75,12 @@ namespace Product_Reviews_Api.Controllers
             _context.SaveChanges();
             return NoContent();
         }
-        [Route("api/productId")]
-        public IActionResult ReviewGetByProductId(ICollection <Review> Reviews, int productId)
+        [Route("search/{ProductId}")]
+        public IActionResult ReviewGetByProductId(int productId)
         {
             var getByProdId = _context.Reviews.Where(r => r.ProductId==productId);
-            return NotFound();
+
+            return StatusCode(200,getByProdId);
         }
     }
 }
