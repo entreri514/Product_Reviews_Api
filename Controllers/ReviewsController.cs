@@ -17,7 +17,7 @@ namespace Product_Reviews_Api.Controllers
         }
         // GET: api/<ReviewsController>
         [HttpGet]
-        public IActionResult Get()
+        public IActionResult ReviewGet()
         {
             var getReview = _context.Reviews.ToList();
             return StatusCode(200,getReview);
@@ -25,7 +25,7 @@ namespace Product_Reviews_Api.Controllers
 
         // GET api/<ReviewsController>/5
         [HttpGet("{id}")]
-        public IActionResult Get(int id)
+        public IActionResult ReviewGet(int id)
         {
             var getReview = _context.Reviews.Find(id);
             if (getReview==null)
@@ -38,7 +38,7 @@ namespace Product_Reviews_Api.Controllers
 
         // POST api/<ReviewsController>
         [HttpPost]
-        public IActionResult Post([FromBody] Review addReview)
+        public IActionResult ReviewPost([FromBody] Review addReview)
         {
             _context.Reviews.Add(addReview);
             _context.SaveChanges();
@@ -47,7 +47,7 @@ namespace Product_Reviews_Api.Controllers
 
         // PUT api/<ReviewsController>/5
         [HttpPut("{id}")]
-        public IActionResult Put(int id, [FromBody] Review updatedReview)
+        public IActionResult ReviewPut(int id, [FromBody] Review updatedReview)
         {
             var updateReview = _context.Reviews.Find(id);
             if (updateReview==null)
@@ -64,16 +64,22 @@ namespace Product_Reviews_Api.Controllers
 
         // DELETE api/<ReviewsController>/5
         [HttpDelete("{id}")]
-        public IActionResult Delete(int id)
+        public IActionResult ReviewDelete(int id)
         {
             var deleteReview = _context.Reviews.Find(id);
-            if (deleteReview==null)
+            if (deleteReview == null)
             {
                 return NotFound();
             }
             _context.Reviews.Remove(deleteReview);
             _context.SaveChanges();
             return NoContent();
+        }
+        [HttpGet("id")]
+        public IActionResult ReviewGetByProductId(int id)
+        {
+            var getByProdId = _context.Reviews.Find(id);
+
         }
     }
 }

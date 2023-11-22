@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.OpenApi.Extensions;
 using Product_Reviews_Api.Data;
+using Product_Reviews_Api.Models;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -15,35 +17,56 @@ namespace Product_Reviews_Api.Controllers
             _context = context; 
             }
         // GET: api/<ProductsController>
-        [HttpGet]
-        public IEnumerable<string> Get()
-        {
-            return new string[] { "value1", "value2" };
-        }
+ //       [HttpGet]
+ //       public IEnumerable<string> Get()
+ //       {
+ //           return new string[] { "value1", "value2" };
+ //       }
 
         // GET api/<ProductsController>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
-        {
-            return "value";
-        }
+ //       [HttpGet("{id}")]
+ //       public string Get(int id)
+ //       {
+ //           return "value";
+ //       }
 
         // POST api/<ProductsController>
         [HttpPost]
-        public void Post([FromBody] string value)
+        public IActionResult ProductPost([FromBody] Product addProduct)
         {
+            _context.Products.Add(addProduct);
+            _context.SaveChanges();
+            return StatusCode(201, addProduct);
         }
 
         // PUT api/<ProductsController>/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public IActionResult ProductPut(int id, [FromBody] Product updatedProduct)
         {
+            var updateProduct = _context.Products.Find(id);
+            if (updateProduct==null)
+            {
+                return NotFound();
+            }
+            updateProduct.Name = updatedProduct.Name;
+            updateProduct.Price = updatedProduct.Price;
+            _context.Update(updateProduct);
+            _context.SaveChanges();
+            return StatusCode(200, updateProduct);
         }
 
         // DELETE api/<ProductsController>/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public IActionResult ProductDelete(int id)
         {
+            var deleteProduct = _context.Products.Find(id);
+            if (deleteProduct==null)
+            {
+                return NotFound();
+            }
+            _context.Products.Remove(deleteProduct);
+            _context.SaveChanges();
+            return NoContent();
         }
     }
 }
