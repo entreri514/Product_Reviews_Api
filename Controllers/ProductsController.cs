@@ -16,19 +16,20 @@ namespace Product_Reviews_Api.Controllers
             {
             _context = context; 
             }
-        // GET: api/<ProductsController>
- //       [HttpGet]
- //       public IEnumerable<string> Get()
- //       {
- //           return new string[] { "value1", "value2" };
- //       }
+          //GET: api/<ProductsController>
+        [HttpGet]
+        public IActionResult ProductGet()
+        {
+            var getProduct = _context.Products.ToList();
+            return StatusCode(200, getProduct);
+        }
 
         // GET api/<ProductsController>/5
- //       [HttpGet("{id}")]
- //       public string Get(int id)
- //       {
- //           return "value";
- //       }
+        [HttpGet("{id}")]
+        public string Get(int id)
+        {
+            return "value";
+        }
 
         // POST api/<ProductsController>
         [HttpPost]

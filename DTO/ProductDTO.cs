@@ -2,7 +2,7 @@
 
 namespace Product_Reviews_Api.DTO
 {
-    public class ProgramDTO
+    public class ProductDTO
     {
         [Key]
         public int Id { get; set; }
