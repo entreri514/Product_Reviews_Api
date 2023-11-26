@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Extensions;
 using Product_Reviews_Api.Data;
+using Product_Reviews_Api.DTO;
 using Product_Reviews_Api.Models;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -31,9 +33,13 @@ namespace Product_Reviews_Api.Controllers
 
         // GET api/<ProductsController>/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public IActionResult GetProductInfo(int id)
         {
-            return "value";
+           
+         //   var getProduct = _context.ProductDTOs.Include(p => p.Reviews).
+         //        Select(p => p.Reviews.Rating).Average();
+
+            return StatusCode(200);
         }
 
         // POST api/<ProductsController>
